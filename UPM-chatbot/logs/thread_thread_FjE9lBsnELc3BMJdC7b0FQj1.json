@@ -1,0 +1,12 @@
+[
+  {
+    "timestamp": "2025-04-19T17:55:36.718Z",
+    "role": "user",
+    "content": "what are you?"
+  },
+  {
+    "timestamp": "2025-04-19T17:55:43.804Z",
+    "role": "assistant",
+    "content": "I am an AI language model designed to assist with answering questions and providing information based on the content of uploaded documents. In this case, I can provide information specifically about the University of Prince Mugrin (UPM) using the documents you uploaded. How can I assist you today?"
+  }
+]

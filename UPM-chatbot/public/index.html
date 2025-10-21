@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>UPM Academic Assistant</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      margin: 0;
+      background-color: #f5f5f5;
+    }
+
+    #chat-toggle {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background-color: #4FB748;
+      color: white;
+      border: none;
+      padding: 14px 22px;
+      border-radius: 30px;
+      font-weight: bold;
+      font-size: 16px;
+      cursor: pointer;
+      z-index: 999;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+
+      /* Smooth transition for dimensions and content */
+      transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    #chat-toggle img {
+      width: 26px;
+      height: 26px;
+    }
+
+    .toggle-content {
+      display: none;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .down-arrow {
+      font-size: 20px;
+      transform: translateY(1px);
+      color: white;
+      transition: transform 0.3s ease;
+    }
+
+    #chat-toggle.open {
+      width: 40px;
+      height: 40px;
+      padding: 0;
+      border-radius: 50%;
+      justify-content: center;
+      transition: all 0.1s ease-in-out;
+    }
+
+    #chat-toggle.open .toggle-content.closed {
+      display: none;
+    }
+
+    #chat-toggle.open .toggle-content.open {
+      display: flex;
+    }
+
+    #chat-toggle:not(.open) .toggle-content.closed {
+      display: flex;
+    }
+
+    #chat-toggle:not(.open) .toggle-content.open {
+      display: none;
+    }
+
+    #chat-popup {
+      position: fixed;
+      bottom: 90px;
+      right: 24px;
+      width: 90vw;
+      max-width: 400px;
+      height: 550px;
+      border-radius: 22px;
+      background-color: white;
+      display: none;
+      flex-direction: column;
+      overflow: hidden;
+      z-index: 1000;
+      border: 1px solid #ddd;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+      transition: all 0.3s ease-in-out;
+    }
+
+    #chat-header {
+      background-color: #4FB748;
+      color: white;
+      padding: 14px 20px 14px 16px;
+      font-size: 16px;
+      font-weight: bold;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      gap: 8px;
+    }
+
+    #chat-header .header-logo {
+      width: 28px;
+      height: 28px;
+      object-fit: contain;
+      border-radius: 4px;
+    }
+
+    #assistant-logo {
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      margin: 20px auto 16px auto;
+      display: block;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    #assistant-title {
+      text-align: center;
+      font-weight: bold;
+      font-size: 22px;
+      padding-left: 32px;
+      padding-right: 32px;
+    }
+
+    #assistant-subtitle {
+      text-align: center;
+      color: #666;
+      font-size: 13px;
+      margin-top: 12px;
+      margin-bottom: 30px;
+      padding: 0 16px;
+    }
+
+    #chat-box {
+      flex: 1;
+      overflow-y: auto;
+      padding: 10px;
+      font-size: 14px;
+      background-color: #fff;
+    }
+
+    .user-msg-wrapper {
+      display: flex;
+      justify-content: flex-end;
+      margin-bottom: 8px;
+    }
+
+    .user-msg {
+      background: #4FB748;
+      color: #EDF8ED;
+      padding: 10px 14px;
+      border-radius: 16px;
+      font-size: 14px;
+      line-height: 1.8;
+      max-width: 85%;
+      direction: rtl;
+      text-align: right;
+      word-break: break-word;
+    }
+
+    .assistant-msg {
+      display: flex;
+      align-items: flex-start;
+      margin-bottom: 8px;
+    }
+
+    .assistant-msg img {
+      width: 28px;
+      height: 28px;
+      margin-right: 8px;
+      border-radius: 50%;
+      margin-top: 4px;
+    }
+
+    .assistant-bubble {
+      background: #F0F0F0;
+      color: #1A1E22;
+      padding: 10px 14px;
+      border-radius: 16px;
+      max-width: 80%;
+      line-height: 1.6;
+    }
+
+    #chat-input {
+      display: flex;
+      padding: 12px;
+      background-color: white;
+    }
+
+    #chat-input input {
+      flex: 1;
+      padding: 12px 18px;
+      border-radius: 25px;
+      border: 1.8px solid #ccc;
+      outline: none;
+      font-size: 14px;
+      transition: border 0.2s ease;
+    }
+
+    #chat-input input:focus {
+      border: 2px solid #4FB748;
+    }
+
+    #chat-input button {
+      background-color: #4FB748;
+      color: white;
+      border: none;
+      width: 42px;
+      height: 42px;
+      margin-left: 8px;
+      border-radius: 50%;
+      font-size: 16px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .typing-indicator {
+      display: flex;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+
+    .typing-indicator img {
+      width: 20px;
+      height: 20px;
+      margin-right: 8px;
+      border-radius: 50%;
+    }
+
+    .arrow-icon {
+      width: 16px;
+      height: 16px;
+      object-fit: contain;
+      display: block;
+    }
+
+    .dots span {
+      display: inline-block;
+      width: 6px;
+      height: 6px;
+      margin: 0 1px;
+      background-color: #aaa;
+      border-radius: 50%;
+      animation: blink 1.4s infinite;
+    }
+
+    .dots span:nth-child(2) { animation-delay: 0.2s; }
+    .dots span:nth-child(3) { animation-delay: 0.4s; }
+
+    @keyframes blink {
+      0%, 80%, 100% { opacity: 0; }
+      40% { opacity: 1; }
+    }
+
+    @media (max-width: 480px) {
+      #chat-popup {
+        width: 95vw;
+        height: 90vh;
+        bottom: 5vh;
+        right: 2.5vw;
+      }
+
+      #chat-input input {
+        font-size: 13px;
+        padding: 10px 14px;
+      }
+
+      #chat-input button {
+        width: 38px;
+        height: 38px;
+        font-size: 14px;
+      }
+
+      #assistant-title {
+        font-size: 18px;
+      }
+
+      #assistant-subtitle {
+        font-size: 12px;
+      }
+
+      .assistant-bubble,
+      .user-msg {
+        font-size: 13px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <button id="chat-toggle">
+    <span class="toggle-content closed">
+      <img src="images/robot-icon.png" alt="bot" />
+      <span>Academic Assistant</span>
+    </span>
+    <span class="toggle-content open">
+      <img class="arrow-icon" src="images/down-arrow.svg" alt="Close" />
+    </span>
+  </button>
+
+  <div id="chat-popup">
+    <div id="chat-header">
+      <img src="images/UPM11.png" alt="UPM Logo" class="header-logo" />
+      <span>UPM Academic Assistant</span>
+    </div>
+
+    <div id="chat-box">
+      <img id="assistant-logo" src="images/UPM334.png" alt="UPM Logo" />
+      <div id="assistant-title">UPM Academic Assistant</div>
+      <div id="assistant-subtitle">Supporting your academic journey at Prince Muqrin University!</div>
+    </div>
+
+    <div id="chat-input">
+      <input type="text" id="user-input" placeholder="Message..." />
+      <button onclick="sendMessage()">➤</button>
+    </div>
+  </div>
+
+  <script>
+    let thread_id = null;
+    const toggleButton = document.getElementById("chat-toggle");
+    const chatPopup = document.getElementById("chat-popup");
+
+    toggleButton.addEventListener("click", () => {
+      const isOpen = chatPopup.style.display === "flex";
+
+      if (isOpen) {
+        chatPopup.style.display = "none";
+        toggleButton.classList.remove("open");
+      } else {
+        chatPopup.style.display = "flex";
+        chatPopup.style.flexDirection = "column";
+        document.getElementById("chat-box").innerHTML = `
+          <img id="assistant-logo" src="images/UPM334.png" alt="UPM Logo" />
+          <div id="assistant-title">UPM Academic Assistant</div>
+          <div id="assistant-subtitle">Supporting your academic journey at Prince Muqrin University!</div>
+        `;
+        showInitialMessages();
+        toggleButton.classList.add("open");
+      }
+    });
+    function formatAssistantText(markdown) {
+      return markdown
+        // Multiline code block
+        .replace(/```([\s\S]*?)```/g, "<pre><code>$1</code></pre>")
+
+        // Headers
+        .replace(/^### (.*)$/gm, "<h3>$1</h3>")
+        .replace(/^## (.*)$/gm, "<h2>$1</h2>")
+        .replace(/^# (.*)$/gm, "<h1>$1</h1>")
+        .replace(/^#### (.*)$/gm, "<h4>$1</h4>")  // Added for your screenshot
+
+        // Bold and italic
+        .replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>")
+        .replace(/__(.*?)__/g, "<strong>$1</strong>")
+        .replace(/\*(.*?)\*/g, "<em>$1</em>")
+        .replace(/_(.*?)_/g, "<em>$1</em>")
+
+        // Inline code
+        .replace(/`([^`]+)`/g, "<code>$1</code>")
+
+        // Blockquote
+        .replace(/^> (.*)$/gm, "<blockquote>$1</blockquote>")
+
+        // Horizontal rule
+        .replace(/^(-{3,}|_{3,}|\*{3,})$/gm, "<hr>")
+
+        // Links
+        .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer">$1</a>')
+
+        // Fix unordered lists (combine multiple `- item` lines)
+        .replace(/((?:^|\n)(?:[-+*] .+(?:\n|$))+)/g, match => {
+          const items = match.trim().split(/\n/).map(line => line.replace(/^[-+*] (.+)/, "<li>$1</li>")).join("");
+          return `<ul>${items}</ul>`;
+        })
+
+        // Fix ordered lists (combine multiple `1. item` lines)
+        .replace(/((?:^|\n)(?:\d+\.\s.+(?:\n|$))+)/g, match => {
+          const items = match.trim().split(/\n/).map(line => line.replace(/^\d+\.\s(.+)/, "<li>$1</li>")).join("");
+          return `<ol>${items}</ol>`;
+        })
+
+        // Line breaks
+        .replace(/\n/g, "<br>");
+    }
+
+
+
+
+    function showInitialMessages() {
+      const chatBox = document.getElementById("chat-box");
+
+      // Function to create typing dots
+      function createTyping() {
+        const typing = document.createElement("div");
+        typing.className = "typing-indicator";
+        typing.innerHTML = `<img src="images/UPM334.png"><div class="dots"><span></span><span></span><span></span></div>`;
+        return typing;
+      }
+
+      // Add first typing indicator
+      const typing1 = createTyping();
+      chatBox.appendChild(typing1);
+      chatBox.scrollTop = chatBox.scrollHeight;
+
+      setTimeout(() => {
+        chatBox.removeChild(typing1);
+
+        const msg1 = document.createElement("div");
+        msg1.className = "assistant-msg";
+        msg1.innerHTML = `
+          <img src="images/UPM334.png">
+          <div class="assistant-bubble">Hi! I'm UPM Academic Assistant<br>مرحبًا! أنا المساعد الأكاديمي الخاص بجامعة الأمير مقرن</div>`;
+        chatBox.appendChild(msg1);
+        chatBox.scrollTop = chatBox.scrollHeight;
+
+        // Add second typing indicator
+        const typing2 = createTyping();
+        chatBox.appendChild(typing2);
+        chatBox.scrollTop = chatBox.scrollHeight;
+
+        setTimeout(() => {
+          chatBox.removeChild(typing2);
+
+          const msg2 = document.createElement("div");
+          msg2.className = "assistant-msg";
+          msg2.innerHTML = `
+            <img src="images/UPM334.png">
+            <div class="assistant-bubble">how can I help you today?<br>كيف يمكنني مساعدتك اليوم؟</div>`;
+          chatBox.appendChild(msg2);
+          chatBox.scrollTop = chatBox.scrollHeight;
+
+          document.querySelector("#chat-input button").disabled = false;
+        }, 1000);
+
+      }, 1000);
+    }
+
+
+    async function sendMessage() {
+      const inputField = document.getElementById("user-input");
+      const message = inputField.value.trim();
+      if (!message) return;
+
+      const chatBox = document.getElementById("chat-box");
+
+      const wrapper = document.createElement("div");
+      wrapper.className = "user-msg-wrapper";
+
+      const userDiv = document.createElement("div");
+      userDiv.className = "user-msg";
+      userDiv.innerText = message;
+
+      const isArabic = /[\u0600-\u06FF]/.test(message);
+      userDiv.setAttribute("dir", isArabic ? "rtl" : "ltr");
+      userDiv.style.textAlign = isArabic ? "right" : "left";
+      userDiv.style.unicodeBidi = "plaintext";
+
+      wrapper.appendChild(userDiv);
+      chatBox.appendChild(wrapper);
+
+      inputField.value = "";
+      document.querySelector("#chat-input button").disabled = true;
+
+      const typing = document.createElement("div");
+      typing.className = "typing-indicator";
+      typing.innerHTML = `<img src="images/UPM334.png"><div class="dots"><span></span><span></span><span></span></div>`;
+      chatBox.appendChild(typing);
+      chatBox.scrollTop = chatBox.scrollHeight;
+
+      if (!thread_id) {
+        const startRes = await fetch("/start");
+        const startData = await startRes.json();
+        thread_id = startData.thread_id;
+      }
+
+      const response = await fetch("/chat", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ thread_id, message }),
+      });
+
+      const data = await response.json();
+      chatBox.removeChild(typing);
+
+      let finalText = data.response.replace(/【.*?†source】/g, "").trim();
+      finalText = formatAssistantText(finalText);
+
+
+
+      const assistantDiv = document.createElement("div");
+      assistantDiv.className = "assistant-msg";
+
+      const isArabicResp = /[\u0600-\u06FF]/.test(finalText);
+      assistantDiv.innerHTML = `
+        <img src="images/UPM334.png">
+        <div class="assistant-bubble" dir="${isArabicResp ? 'rtl' : 'ltr'}">${finalText}</div>
+      `;
+      chatBox.appendChild(assistantDiv);
+      chatBox.scrollTop = chatBox.scrollHeight;
+
+      document.querySelector("#chat-input button").disabled = false;
+      inputField.focus();
+    }
+
+    document.getElementById("user-input").addEventListener("keydown", function (e) {
+      const sendButton = document.querySelector("#chat-input button");
+      if (e.key === "Enter" && !sendButton.disabled) {
+        e.preventDefault();
+        sendMessage();
+      }
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,22 @@
+[
+  {
+    "timestamp": "2025-04-19T18:01:25.104Z",
+    "role": "user",
+    "content": "what are the first year first semester courses for AI?"
+  },
+  {
+    "timestamp": "2025-04-19T18:01:37.419Z",
+    "role": "assistant",
+    "content": "The courses for the first year, first semester of the Artificial Intelligence program at the University of Prince Mugrin (UPM) are:\n\n1. **MATH 101 – Calculus I**  \n   - Credit hours: 4  \n   - Prerequisite: MATH 002  \n\n2. **GIAS 101 – Islamic Culture**  \n   - Credit hours: 3  \n   - Prerequisite: None  \n\n3. **CS 111 – Introduction to Computing and Programming**  \n   - Credit hours: 4  \n   - Prerequisite: PCS 001  \n\n4. **ENGL 101 – First Year Composition**  \n   - Credit hours: 3  \n   - Prerequisite: ENGL 005  \n\n5. **PHYS 111 – Introduction to Physics**  \n   - Credit hours: 3  \n   - Prerequisite: MATH 002  \n\nThese courses amount to a total of 17 credit hours【4:0†source】."
+  },
+  {
+    "timestamp": "2025-04-19T18:02:15.941Z",
+    "role": "user",
+    "content": "ما هي مواد الفصل الأول من السنة الأولى لتخصص الذكاء الاصطناعي؟"
+  },
+  {
+    "timestamp": "2025-04-19T18:02:28.165Z",
+    "role": "assistant",
+    "content": "مواد الفصل الأول من السنة الأولى لتخصص الذكاء الاصطناعي في جامعة الأمير مقرن هي:\n\n1. **MATH 101 – التفاضل والتكامل ١**  \n   - ٤ ساعات معتمدة  \n   - المتطلب السابق: MATH 002  \n\n2. **GIAS 101 – الثقافة الإسلامية**  \n   - ٣ ساعات معتمدة  \n   - المتطلب السابق: لا يوجد  \n\n3. **CS 111 – مقدمة في الحوسبة والبرمجة**  \n   - ٤ ساعات معتمدة  \n   - المتطلب السابق: PCS 001  \n\n4. **ENGL 101 – مهارات الكتابة للمستوى الأول**  \n   - ٣ ساعات معتمدة  \n   - المتطلب السابق: ENGL 005  \n\n5. **PHYS 111 – الفيزياء العامة ١**  \n   - ٣ ساعات معتمدة  \n   - المتطلب السابق: MATH 002  \n\nإجمالي الساعات المعتمدة هو ١٧ ساعة【8:1†source】."
+  }
+]
