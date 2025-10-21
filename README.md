@@ -28,6 +28,14 @@ It includes a simple **web interface** with a typing animation and clean, mobile
 ---
 
 ## 📸 Screenshots
+<p align="center">
+  <img src="images/chatbot-ui.png" width="600">
+</p>
+
+<p align="center">
+  <img src="images/conversation-demo.png" width="600">
+</p>
+
 ### Chat Interface
 ![Chatbot UI](chatbot-ui.png)
 
