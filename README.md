@@ -29,11 +29,11 @@ It includes a simple **web interface** with a typing animation and clean, mobile
 
 ## 📸 Screenshots
 ### Chat Interface
-![Chatbot UI](images/chatbot-ui.png)
+![Chatbot UI](chatbot-ui.png)
 
 ### Conversation Example
-![Conversation Demo 1](images/conversation-demo1.png)
-![Conversation Demo 2](images/conversation-demo.png)
+![Conversation Demo 1](conversation-demo1.png)
+![Conversation Demo 2](conversation-demo.png)
 ---
 
 ## 🏁 Project Type
