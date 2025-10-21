@@ -31,7 +31,7 @@ It includes a simple **web interface** with a typing animation and clean, mobile
 
 ### 💬 Chat Interface  
 <p align="center">
-  <img src="chatbot-ui.png" width="600"><br>
+  <img src="chatbot-ui.png" width="300"><br>
   <em>Clean and bilingual chat interface with typing animation.</em>
 </p>
 
@@ -39,11 +39,11 @@ It includes a simple **web interface** with a typing animation and clean, mobile
 
 ### 🤖 Conversation Examples  
 <p align="center">
-  <img src="conversation-demo1.png" width="600"><br>
+  <img src="conversation-demo1.png" width="300"><br>
 </p>
 
 <p align="center">
-  <img src="conversation-demo.png" width="600"><br>
+  <img src="conversation-demo.png" width="300"><br>
 </p>
 ---
 
