@@ -27,21 +27,24 @@ It includes a simple **web interface** with a typing animation and clean, mobile
 
 ---
 
-## 📸 Screenshots
+## 📸 Screenshots  
+
+### 💬 Chat Interface  
 <p align="center">
-  <img src="images/chatbot-ui.png" width="600">
+  <img src="chatbot-ui.png" width="600"><br>
+  <em>Clean and bilingual chat interface with typing animation.</em>
+</p>
+
+---
+
+### 🤖 Conversation Examples  
+<p align="center">
+  <img src="conversation-demo1.png" width="600"><br>
 </p>
 
 <p align="center">
-  <img src="images/conversation-demo.png" width="600">
+  <img src="conversation-demo.png" width="600"><br>
 </p>
-
-### Chat Interface
-![Chatbot UI](chatbot-ui.png)
-
-### Conversation Example
-![Conversation Demo 1](conversation-demo1.png)
-![Conversation Demo 2](conversation-demo.png)
 ---
 
 ## 🏁 Project Type
